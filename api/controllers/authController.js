@@ -34,7 +34,7 @@ exports.createUser = function(req, res) {
   var userData = {
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password // saving password directly which would't in real app
+    password: req.body.password // saving password directly which would't do in real app
   };
 
   var newUser = new User(userData);

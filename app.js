@@ -42,7 +42,9 @@ console.log(
 
 // Close Node app
 process.on("SIGINT", () => {
-  console.log("\n We're closing the connection to database, bye! 👋");
+  console.log(
+    "\n We're closing the connection to database (and the app), bye! 👋"
+  );
   mongoose.connection.close();
   process.exit();
 });
