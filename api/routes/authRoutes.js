@@ -4,6 +4,6 @@ module.exports = function(app) {
   // auth login routes
   app
     .route("/login")
-    .get(auth.login)
+    .put(auth.login)
     .post(auth.createUser);
 };

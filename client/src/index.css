@@ -122,3 +122,57 @@ input:checked + .slider:before {
   background-color: #ff004f;
   border-color: #cb0140;
 }
+
+.form {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+}
+
+.form:hover {
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
+}
+
+form {
+  margin: 30px;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  border: 3px solid #ff004f;
+}
+
+input,
+textarea {
+  border: none;
+  background-color: white;
+  border-radius: 10px;
+  padding: 9px;
+  margin-bottom: 30px;
+  font-size: calc(10px + 2vmin);
+}
+
+input[type="submit"] {
+  font-family: $title-font-family;
+  padding: 14px;
+  color: white;
+  background-color: #00ff74;
+}
+
+input[type="submit"]:hover {
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  background-color: #03d160;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+}
+
+label {
+  font-weight: bold;
+}

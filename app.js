@@ -2,9 +2,10 @@ var express = require("express"),
   app = express(),
   port = process.env.PORT || 3003,
   mongoose = require("mongoose"),
+  bodyParser = require("body-parser"),
+  cors = require("cors"),
   User = require("./api/models/authModel"),
   keys = require("./config/keys"),
-  bodyParser = require("body-parser"),
   validateUser = require("./api/middlewares/validateUser");
 
 // Connecting to online database mLab
@@ -18,6 +19,30 @@ mongoose.connect(
 // Convert res.body into JSON
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Setting up middleware to allow the React app access
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader("Access-Control-Allow-Credentials", true);
+
+  // Pass to next layer of middleware
+  next();
+});
 
 // Setting up middleware to check user data
 app.use(validateUser);

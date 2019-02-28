@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Form from "./components/Form";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
-      password: "",
-      email: "example@example.com",
       url: "http://localhost:3003/login",
       alert: {
         success: false,
@@ -30,10 +26,12 @@ class App extends Component {
   }
 
   async loginUser(body) {
-    try {
-      const res = await axios.get(`${this.state.url}`, body);
+    console.log("LOGIN", body);
 
-      if (res.status === 200) {
+    try {
+      const res = await axios.put(`${this.state.url}`, body);
+
+      if (res.code === 200) {
         this.handleAlert(true, res.data.message);
         return;
       }
@@ -48,10 +46,11 @@ class App extends Component {
   }
 
   async addNewUser(body) {
+    console.log("create", body);
     try {
       const res = await axios.post(`${this.state.url}`, body);
 
-      if (res.status === 201) {
+      if (res.code === 201) {
         this.handleAlert(true, res.data.message);
         return;
       }
@@ -98,9 +97,9 @@ class App extends Component {
             <span className="slider round" />
           </label>
           {this.state.switch ? (
-            <Register submit={this.addNewUser.bind(this)} />
+            <Form title={"Register"} submit={this.addNewUser.bind(this)} />
           ) : (
-            <Login submit={this.loginUser.bind(this)} />
+            <Form title={"Login"} submit={this.loginUser.bind(this)} />
           )}
         </header>
       </div>
