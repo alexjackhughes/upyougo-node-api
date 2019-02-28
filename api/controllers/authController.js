@@ -8,13 +8,25 @@ exports.login = function(req, res) {
     password: req.body.password
   };
 
-  return res.status(200).send({
-    code: 201,
-    message: "Awesome, you've successfully logged in!",
-    user: {
-      ...userData,
-      password: "secret"
+  User.findOne(userData, function(e, user) {
+    if (e || !user) {
+      return res.status(404).send({
+        code: 404,
+        message:
+          "That's weird! We couldn't find a user with those credentials.",
+        error: e,
+        user
+      });
     }
+
+    return res.status(200).send({
+      code: 201,
+      message: "Awesome, you've successfully logged in!",
+      user: {
+        ...user._doc,
+        password: "secret"
+      }
+    });
   });
 };
 
@@ -22,7 +34,7 @@ exports.createUser = function(req, res) {
   var userData = {
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password // saving password directly which would't in real app
   };
 
   var newUser = new User(userData);

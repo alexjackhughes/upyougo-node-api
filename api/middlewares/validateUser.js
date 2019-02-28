@@ -1,5 +1,6 @@
 var _ = require("lodash");
 var validateEmail = require("../services/validateEmail");
+var validatePassword = require("../services/validatePassword");
 
 module.exports = (req, res, next) => {
   var data = req.body;
@@ -33,6 +34,12 @@ module.exports = (req, res, next) => {
         code: 400,
         message: "Oops! Looks like you need to add a valid password!"
       });
+    } else if (!validatePassword(data.password)) {
+      return res.status(400).send({
+        code: 400,
+        message:
+          "Make sure your password is at least 8 characters, with at least one uppercase letter, one lowercase letter, one number and one special character"
+      });
     }
 
     next();
@@ -44,7 +51,7 @@ module.exports = (req, res, next) => {
     });
   }
 };
-//
+
 // function validUsername(body, res) {
 //   if (!_.has(body, "username") && !_.isString(body.username)) {
 //     return res.send({
@@ -53,7 +60,7 @@ module.exports = (req, res, next) => {
 //     });
 //   }
 // }
-//
+
 // function validEmail(body, res) {
 //   if (
 //     (!_.has(body, "email") && !_.isString(body.email)) ||
@@ -65,7 +72,7 @@ module.exports = (req, res, next) => {
 //     });
 //   }
 // }
-//
+
 // function validPassword(body, res) {
 //   if (!_.has(body, "password") && !_.isString(body.password)) {
 //     return res.status(400).send({
