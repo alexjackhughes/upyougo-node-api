@@ -2,22 +2,47 @@ var mongoose = require("mongoose"),
   User = mongoose.model("Users");
 
 exports.login = function(req, res) {
-  console.log(req.body);
-  return res.status(200).send({
-    hello: "howdy"
-  });
+  var userData = {
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password
+  };
 
-  // should get the data and validate it
-  // if data isn't valid throw error,
-  // Otherwise send an appropriate response
+  return res.status(200).send({
+    code: 201,
+    message: "Awesome, you've successfully logged in!",
+    user: {
+      ...userData,
+      password: "secret"
+    }
+  });
 };
 
 exports.createUser = function(req, res) {
-  console.log(req.body);
-  return res.status(200).send({
-    hello: "howdy"
-  });
+  var userData = {
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password
+  };
 
-  // should check the data
-  // and allow the user to login
+  var newUser = new User(userData);
+  newUser.save(function(e, user) {
+    if (e) {
+      return res.status(400).send({
+        code: 400,
+        message: "Sorry, looks like you've already registered with that email!",
+        error: e
+      });
+    }
+
+    return res.status(201).send({
+      code: 201,
+      message:
+        "Success! Your profile has been created " + req.body.username + "!",
+      user: {
+        ...user._doc,
+        password: "secret"
+      }
+    });
+  });
 };
