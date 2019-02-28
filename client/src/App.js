@@ -7,7 +7,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      url: "http://localhost:3003/login",
+      url: "http://localhost:3004",
       alert: {
         success: false,
         message: ""
@@ -26,12 +26,10 @@ class App extends Component {
   }
 
   async loginUser(body) {
-    console.log("LOGIN", body);
-
     try {
-      const res = await axios.put(`${this.state.url}`, body);
+      const res = await axios.put(`${this.state.url}/login`, body);
 
-      if (res.code === 200) {
+      if (res.data.code === 200) {
         this.handleAlert(true, res.data.message);
         return;
       }
@@ -41,31 +39,29 @@ class App extends Component {
         "There was an error submitting, please try again!"
       );
     } catch (e) {
-      this.handleAlert(false, e.message);
+      this.handleAlert(false, e.response.data.message);
     }
   }
 
   async addNewUser(body) {
-    console.log("create", body);
     try {
-      const res = await axios.post(`${this.state.url}`, body);
+      const res = await axios.post(`${this.state.url}/login`, body);
 
-      if (res.code === 201) {
+      if (res.data.code === 201) {
         this.handleAlert(true, res.data.message);
         return;
       }
 
       this.handleAlert(
         false,
-        "There was an error submitting, please try again!"
+        "There was an error adding that user, please try again!"
       );
     } catch (e) {
-      this.handleAlert(false, e.message);
+      this.handleAlert(false, e.response.data.message);
     }
   }
 
   onSwitch(e) {
-    console.log("wow", this.state.switch, e.target);
     this.setState({
       switch: !this.state.switch
     });

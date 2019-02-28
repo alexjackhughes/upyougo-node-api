@@ -1,6 +1,6 @@
 var express = require("express"),
   app = express(),
-  port = process.env.PORT || 3003,
+  port = process.env.PORT || 3004,
   mongoose = require("mongoose"),
   bodyParser = require("body-parser"),
   cors = require("cors"),
@@ -20,20 +20,23 @@ mongoose.connect(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Setting up middleware to allow the React app access
+// Allow all cors - WARNING: Wouldn't use in production app
+app.use(cors());
+
+// Stop CORS blocking the React app localhost
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-
-  // Request methods you wish to allow
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
 
   // Request headers you wish to allow
   res.setHeader(
     "Access-Control-Allow-Headers",
     "X-Requested-With,content-type"
+  );
+
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
 
   // Set to true if you need the website to include cookies in the requests sent
