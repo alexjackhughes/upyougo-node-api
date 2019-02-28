@@ -1,6 +1,6 @@
 # Node API Example
 
-_A login form, built with React and Node._
+_A login form, built with React and Node for upUgo._
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ npm run dev
 You can view the API via Postman (or your own favourite app provider on):
 
 ```
-http://localhost:3002/
+http://localhost:3004/
 ```
 
 where as the client will be visible on your browser on:
